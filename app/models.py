@@ -4,6 +4,7 @@ import sqlalchemy as sa
 import sqlalchemy.orm as so
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from hashlib import md5
 
 from app import db, login
 
@@ -23,6 +24,12 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        '''Query Params for Gravatar:
+                `d`: monsterid, identicon, retro, wavatar, robohash, blank'''
+        return f"https://www.gravatar.com/avatar/{digest}?d=wavatar&size={size}"
 
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
