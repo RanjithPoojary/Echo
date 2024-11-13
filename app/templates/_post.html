@@ -1,0 +1,8 @@
+<!-- Sub template to render single post -->
+<!-- '_post.html': The `_` prefix is just a naming convention to recognize sub-templates -->
+<table>
+    <tr valign="top">
+        <td><img src="{{ post.author.avatar(36) }}"></td>
+        <td>{{ post.author.username }} says: <br>{{ post.body }}</td>
+    </tr>
+</table>
