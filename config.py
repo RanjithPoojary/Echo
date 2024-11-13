@@ -20,10 +20,3 @@ class Config:
     # MAIL_USE_TLS = 1
     # MAIL_USERNAME = "<your-gmail-username>"
     # MAIL_PASSWORD = "<your-gmail-password>"
-
-    # Configurations if using a SMTP debugging server like 'aiosmtpd'
-    # MAIL_SERVER = "localhost"
-    # MAIL_PORT = "8025
-
-    # Bring up the aiosmtpd server using below command.
-    # aiosmtpd -n -c aiosmtpd.handlers.Debugging -l localhost:8025
