@@ -73,6 +73,31 @@ class User(UserMixin, db.Model):
         )
         return db.session.scalar(query)
 
+    # Limitations:: Cannot fetch posts from the user, only gets posts of following people.
+    # def following_posts(self):
+    #     Author = so.aliased(User)
+    #     Follower = so.aliased(User)
+    #     return (
+    #         sa.select(Post).join(Post.author.of_type(Author))
+    #         .join(Author.followers.of_type(Follower)).where(Follower.id == self.id)
+    #         .order_by(Post.timestamp.desc())
+    #     )
+
+    def following_posts(self):
+        Author = so.aliased(User)
+        Follower = so.aliased(User)
+        return (
+            sa.select(Post)
+            .join(Post.author.of_type(Author))
+            .join(Author.followers.of_type(Follower), isouter=True)
+            .where(sa.or_(
+                Follower.id == self.id,
+                Author.id == self.id,
+            ))
+            .group_by(Post)
+            .order_by(Post.timestamp.desc())
+        )
+
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     body: so.Mapped[str] = so.mapped_column(sa.String(140))
