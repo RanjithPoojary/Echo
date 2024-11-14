@@ -21,4 +21,4 @@ class Config:
     # MAIL_USERNAME = "<your-gmail-username>"
     # MAIL_PASSWORD = "<your-gmail-password>"
 
-    POSTS_PER_PAGE = 3
+    POSTS_PER_PAGE = 20
