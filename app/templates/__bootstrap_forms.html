@@ -1,0 +1,13 @@
+<!-- Jinja Macros: reusable snippets of HTML, which can be used as functions. -->
+<!-- `__` prefixed to the html names is just a naming convention to distinguish between macros and regular HTML. -->
+
+{% macro form_field(field, attributes=None) %}
+  <div class="mb-3">
+    {{ field.label(class='form-label') }}
+    {% set extra_attrs = attributes or {} %}
+    {{ field(class='form-control' + (' is-invalid' if field.errors else ''), **extra_attrs) }}
+    {%- for error in field.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+    {%- endfor %}
+  </div>
+{% endmacro %}

@@ -1,0 +1,19 @@
+<!-- Jinja Macros: reusable snippets of HTML, which can be used as functions. -->
+<!-- `__` prefixed to the html names is just a naming convention to distinguish between macros and regular HTML. -->
+
+{% macro page_navigation(prev_url, next_url) %}
+    <nav aria-label="Post navigation">
+        <ul class="pagination">
+            <li class="page-item{% if not prev_url %} disabled{% endif %}">
+                <a class="page-link" href="{{ prev_url }}" aria-disabled="{{ not prev_url }}">
+                    <i class="bi bi-arrow-right">&laquo;</i> Newer posts
+                </a>
+            </li>
+            <li class="page-item{% if not next_url %} disabled{% endif %}">
+                <a class="page-link" href="{{ next_url }}" aria-disabled="{{ not next_url }}">
+                    Older posts <i class="bi bi-arrow-right">&raquo;</i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endmacro %}
