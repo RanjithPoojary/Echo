@@ -1,27 +1,23 @@
 {% extends "base.html" %}
+{% import '__page_navigation.html' as pg %}
+{% import '__bootstrap_forms.html' as forms %}
 
 {% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% if form %}
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.post.label }}<br>
-            {{ form.post(cols=32, rows=4) }}<br>
-            {% for error in form.post.errors %}
-            <span style="color:red">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    {% endif %}
+    <div class="container">
+        <h1 class="text-center mb-2">Hi, {{ current_user.username }}</h1>
+        {% if form %}
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            {{ forms.form_field(form.post, attributes= {'cols': 32, 'rows': 4, 'placeholder': "Jot down your thoughts!"}) }}
+            <div class="text-left mt-2">
+                {{ form.submit(class_='btn btn-primary btn-sm') }}
+            </div>
+        </form>
+        {% endif %}
+    </div>
+    <br>
     {% for post in posts %}
     {% include "_post.html" %}
     {% endfor %}
-    {% if prev_url %}
-    <a href="{{ prev_url }}">Newer posts</a>
-    {% endif %}
-    {% if next_url %}
-    <a href="{{ next_url }}">Older posts</a>
-    {% endif %}
+    {{ pg.page_navigation(prev_url, next_url) }}
 {% endblock %}

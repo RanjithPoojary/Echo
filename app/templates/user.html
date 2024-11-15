@@ -1,42 +1,53 @@
 {% extends "base.html" %}
+{% import '__page_navigation.html' as pg %}
+{% import '__bootstrap_forms.html' as forms %}
 
 {% block content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ user.avatar(128) }}"></td>
-            <td>
-                <h1>User: {{ user.username }}</h1>
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
-                <p>{{ user.followers_count() }} followers, {{ user.following_count() }} following.</p>
-                {% if user == current_user %}
-                <p><a href="{{ url_for('edit_profile') }}">Edit Profile</a></p>
-                {% elif not current_user.is_following(user) %}
-                <p>
-                    <form action="{{ url_for('follow', username=user.username) }}" method="post">
-                        {{ form.hidden_tag() }}
-                        {{ form.submit(value='Follow') }}
-                    </form>
-                </p>
-                {% else %}
-                <p>
-                    <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
-                        {{ form.hidden_tag() }}
-                        {{ form.submit(value='Unfollow') }}
-                    </form>
-                </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="{{ user.avatar(128) }}" class="rounded-circle" alt="User Avatar" />
+            </div>
+            <div class="col-md-8">
+                <h1>{{ user.username }}</h1>
+                {% if user.about_me %}
+                <p>{{ user.about_me }}</p>
                 {% endif %}
-            </td>
-        </tr>
-    </table>
+                {% if user.last_seen %}
+                    <p><strong>Last seen on:</strong> {{ user.last_seen }}</p>
+                {% endif %}
+                <p><strong>{{ user.followers_count() }}</strong> followers, <strong>{{ user.following_count() }}</strong> following.</p>
+                {% if user == current_user %}
+                    <p><a href="{{ url_for('edit_profile') }}" class="btn btn-outline-warning btn-sm">Edit Profile</a></p>
+                {% elif not current_user.is_following(user) %}
+                    <p>
+                        <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                            {{ form.hidden_tag() }}
+                            <div>
+                                {{ form.submit(value='Follow', class_='btn btn-success btn-sm') }}
+                            </div>
+                        </form>
+                    </p>
+                {% else %}
+                    <p>
+                        <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                            {{ form.hidden_tag() }}
+                            <div>
+                                {{ form.submit(value='Unfollow', class_='btn btn-danger btn-sm') }}
+                            </div>
+                        </form>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <hr>
-    {% for post in posts %}
-        {% include "_post.html" %}
-    {% endfor %}
-    {% if prev_url %}
-    <a href="{{ prev_url }}">Newer posts</a>
-    {% endif %}
-    {% if next_url %}
-    <a href="{{ next_url }}">Older posts</a>
-    {% endif %}
+
+    <div class="container">
+        {% for post in posts %}
+            {% include "_post.html" %}
+        {% endfor %}
+    </div>
+    {{ pg.page_navigation(prev_url, next_url) }}
 {% endblock %}

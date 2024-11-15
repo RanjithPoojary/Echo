@@ -1,23 +1,18 @@
 {% extends "base.html" %}
+{% import '__bootstrap_forms.html' as forms %}
 
 {% block content %}
-    <h1>Edit Profile</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.about_me.label }}<br>
-            {{ form.about_me(cols=50, rows=4) }}<br>
-            {% for error in form.about_me.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="card shadow-lg p-4 w-100 rounded-4" style="max-width: 400px; background-color: #ffffff;">
+        <h2 class="text-center mb-4">Edit Profile</h2>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            {{ forms.form_field(form.username) }}
+            {{ forms.form_field(form.about_me, attributes= {'cols': 50, 'rows': 4}) }}
+            <div class="text-center mt-4">
+                {{ form.submit(class_='btn btn-dark btn-lg') }}
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
