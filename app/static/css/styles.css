@@ -1,0 +1,23 @@
+.btn-dark:hover {
+  background-color: #28a745;
+  border-color: #218838;
+}
+.fancy-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ae6124, #787321);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Georgia', sans-serif;
+}
+.btn {
+    border-radius: 30px; /* Rounded corners */
+}
+
+.btn-sm {
+    padding: 5px 10px;
+}
+
+.gap-3 {
+    gap: 1rem; /* Spacing between buttons */
+}

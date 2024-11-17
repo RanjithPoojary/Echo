@@ -5,39 +5,67 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-4 text-center">
-                <img src="{{ user.avatar(128) }}" class="rounded-circle" alt="User Avatar" />
+            <div class="col-md-4 text-left">
+                <img src="{{ user.avatar(124) }}" class="rounded-circle" alt="User Avatar" />
+                <h3 class="mt-2 ps-2">{{ user.username | title }}</h3>
+                {% if user.about_me %}
+                <p class="ps-2">{{ user.about_me }}</p>
+                {% endif %}
+<!--                {% if user.last_seen %}-->
+<!--                    <p><strong>Last seen on:</strong> {{ user.last_seen }}</p>-->
+<!--                {% endif %}-->
             </div>
             <div class="col-md-8">
-                <h1>{{ user.username }}</h1>
-                {% if user.about_me %}
-                <p>{{ user.about_me }}</p>
-                {% endif %}
-                {% if user.last_seen %}
-                    <p><strong>Last seen on:</strong> {{ user.last_seen }}</p>
-                {% endif %}
-                <p><strong>{{ user.followers_count() }}</strong> followers, <strong>{{ user.following_count() }}</strong> following.</p>
-                {% if user == current_user %}
-                    <p><a href="{{ url_for('edit_profile') }}" class="btn btn-outline-warning btn-sm">Edit Profile</a></p>
-                {% elif not current_user.is_following(user) %}
-                    <p>
-                        <form action="{{ url_for('follow', username=user.username) }}" method="post">
-                            {{ form.hidden_tag() }}
+
+
+                <div class="container my-3">
+                    <div class="row text-center bg-grey mt-4 py-3 rounded shadow-sm" style="max-width: 150vh">
+                        <div class="col">
                             <div>
+                                <a href="{{ url_for('connections') }}" class="text-decoration-none text-black">
+                                    <small class="text-uppercase">Posts</small>
+                                    <h4 class="fw-bold">0</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col border-start border-end">
+                            <div>
+                                <a href="{{ url_for('connections') }}" class="text-decoration-none text-black">
+                                    <small class="text-uppercase">Followers</small>
+                                    <h4 class="fw-bold">{{ user.followers_count() }}</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <a href="{{ url_for('connections') }}" class="text-decoration-none text-black">
+                                    <small class="text-uppercase">Following</small>
+                                    <h4 class="fw-bold">{{ user.following_count() }}</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container my-3">
+                    <div class="d-flex justify-content-center gap-3">
+                        {% if user == current_user %}
+                            <a href="{{ url_for('edit_profile') }}" class="btn btn-outline-primary btn-md">
+                                <i class="bi bi-pencil-square"></i>Edit Profile
+                            </a>
+                        {% elif not current_user.is_following(user) %}
+                            <form action="{{ url_for('follow', username=user.username) }}" method="post" style="display:inline;">
+                                {{ form.hidden_tag() }}
                                 {{ form.submit(value='Follow', class_='btn btn-success btn-sm') }}
-                            </div>
-                        </form>
-                    </p>
-                {% else %}
-                    <p>
-                        <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
-                            {{ form.hidden_tag() }}
-                            <div>
+                            </form>
+                        {% else %}
+                            <form action="{{ url_for('unfollow', username=user.username) }}" method="post" style="display:inline;">
+                                {{ form.hidden_tag() }}
                                 {{ form.submit(value='Unfollow', class_='btn btn-danger btn-sm') }}
-                            </div>
-                        </form>
-                    </p>
-                {% endif %}
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

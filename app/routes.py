@@ -170,3 +170,15 @@ def reset_password(token):
         flash("Your password has been reset.")
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
+@app.route('/connections')
+def connections():
+    users = db.session.scalars(sa.select(User)).all()
+    print(f"\nAll users:: {users}\n\n")
+    followers, followings = [], []
+    for user in users:
+        if current_user.is_following(user):
+            followings.append(user)
+        if user.is_following(current_user):
+            followers.append(user)
+    return render_template('connections.html', followers=followers, followings=followings)
