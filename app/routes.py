@@ -172,13 +172,11 @@ def reset_password(token):
     return render_template('reset_password.html', form=form)
 
 @app.route('/connections')
+@login_required
 def connections():
-    users = db.session.scalars(sa.select(User)).all()
-    print(f"\nAll users:: {users}\n\n")
-    followers, followings = [], []
-    for user in users:
-        if current_user.is_following(user):
-            followings.append(user)
-        if user.is_following(current_user):
-            followers.append(user)
-    return render_template('connections.html', followers=followers, followings=followings)
+    following_list = list(db.session.scalars(current_user.following.select()))
+    print(f"Following Count: {len(following_list)}")
+    followers_list = list(db.session.scalars(current_user.followers.select()))
+    print(f"Followers Count: {len(followers_list)}")
+
+    return render_template('connections.html', followers=followers_list, followings=following_list)

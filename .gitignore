@@ -2,3 +2,6 @@ __pycache__/
 app.db
 logs/
 seed.py
+backup.db
+scale_seed_data.py
+scale.db

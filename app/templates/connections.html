@@ -8,12 +8,14 @@
             <div class="col-md-6">
                 <div class="card shadow-sm rounded-4">
                     <div class="card-body">
-                        <h5 class="card-title text-dark">Followers</h5>
+                        <h5 class="card-title text-dark">Followers
+                            <span class="badge bg-dark">{{followers|length}}</span>
+                        </h5>
                         <ul class="list-group list-group-flush">
                             {% for follower in followers %}
                             <li class="list-group-item d-flex align-items-center">
                                 <img src="{{ follower.avatar(40) }}" alt="Avatar" class="rounded-circle me-3" style="width: 40px; height: 40px;">
-                                <a href="{{ url_for('user', username=follower.username) }}" class="text-dark fw-bold">{{ follower.username }}</a>
+                                <a href="{{ url_for('user', username=follower.username) }}" class="text-dark fw-bold text-decoration-none">{{ follower.username }}</a>
                             </li>
                             {% endfor %}
                         </ul>
@@ -24,12 +26,14 @@
             <div class="col-md-6">
                 <div class="card shadow-sm rounded-4">
                     <div class="card-body">
-                        <h5 class="card-title text-dark">Following</h5>
+                        <h5 class="card-title text-dark">Following
+                            <span class="badge bg-dark">{{followings|length}}</span>
+                        </h5>
                         <ul class="list-group list-group-flush">
                             {% for following in followings %}
                             <li class="list-group-item d-flex align-items-center">
                                 <img src="{{ following.avatar(40) }}" alt="Avatar" class="rounded-circle me-3" style="width: 40px; height: 40px;">
-                                <a href="{{ url_for('user', username=following.username) }}" class="text-dark fw-bold">{{ following.username }}</a>
+                                <a href="{{ url_for('user', username=following.username) }}" class="text-dark fw-bold text-decoration-none">{{ following.username }}</a>
                             </li>
                             {% endfor %}
                         </ul>
