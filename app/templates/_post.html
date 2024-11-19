@@ -14,7 +14,7 @@
                 </a>
             </h6>
             <p class="card-text">{{ post.body }}</p>
-            <small class="text-muted">Posted on: {{ post.timestamp }}</small>
+            <small class="text-muted">Posted: {{ moment(post.timestamp).fromNow() }}</small>
         </td>
     </tr>
 </table>

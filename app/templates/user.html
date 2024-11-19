@@ -11,9 +11,9 @@
                 {% if user.about_me %}
                 <p class="ps-2">{{ user.about_me }}</p>
                 {% endif %}
-<!--                {% if user.last_seen %}-->
-<!--                    <p><strong>Last seen on:</strong> {{ user.last_seen }}</p>-->
-<!--                {% endif %}-->
+                {% if user.last_seen %}
+                    <p><strong>Last seen on:</strong> {{ moment(user.last_seen).format('LLL') }}</p>
+                {% endif %}
             </div>
             <div class="col-md-8">
                 <div class="container my-3">
